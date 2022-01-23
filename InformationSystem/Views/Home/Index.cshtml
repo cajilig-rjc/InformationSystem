@@ -1,0 +1,68 @@
+﻿@model IEnumerable<InformationSystem.Models.Cases>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+    <div class="card text-center bg-warning" >
+   <div class="card-body">
+    <h3 class="card-title">Active Cases</h3>
+    <h5 class="card-text">@Model.Where(x=>x.Status == Status.Active).Count()</h5>   
+   </div>
+</div>
+    </div>
+    <div class="col-md-4 ">
+      <div class="card text-center bg-success">
+   <div class="card-body">
+    <h3 class="card-title">Recovered</h3>
+    <h5 class="card-text">@Model.Where(x=>x.Status == Status.Recovered).Count()</h5>   
+   </div>
+    </div>
+    </div>
+    <div class="col-md-4">
+       <div class="card text-center bg-danger" >
+   <div class="card-body">
+    <h3 class="card-title">Deaths</h3>
+    <h5 class="card-text">@Model.Where(x=>x.Status == Status.Deceased)?.Count()</h5>   
+   </div>
+    </div>
+  </div>
+  <br />
+  <div class="mt-4 p-5 bg-dark text-white rounded">
+  <h2>Covid Cases per Barangay</h2>         
+  <table class="table table-dark table-striped">
+    <thead>
+      <tr>
+        <th>Barangay</th>
+        <th>Total Cases</th>        
+      </tr>
+    </thead>
+    <tbody>
+       @{
+            var cases = (
+    from c in Model
+    group c.Municipality by c.Barangay into cgroup   
+    select new { caseCount = cgroup.Count(), cgroup.Key }).OrderBy(x=>x.caseCount);
+    @foreach (var item in cases) {
+        <tr>
+            <td>
+               @item.Key
+            </td>
+            <td>
+                @item.caseCount
+            </td>           
+           
+           
+        </tr>
+        }
+        }
+  
+    </tbody>
+  </table>
+</div>
+
+
+
+</div>
