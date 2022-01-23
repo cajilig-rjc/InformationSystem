@@ -8,7 +8,7 @@ namespace InformationSystem.Models
         public Guid Id { get; set; }
         public string FullName { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public int Age => ((DateTime.Today.Year * 100 + DateTime.Today.Month) * 100 + DateTime.Today.Day) - ((DateOfBirth.Year * 100 + DateOfBirth.Month) * 100 + DateOfBirth.Day);
+        public int Age => (DateTime.Now.Year - DateOfBirth.Year);
         public string ContactNumber { get; set; }
         public Status Status { get; set; }
         public string CityOrProvince { get; set; }
